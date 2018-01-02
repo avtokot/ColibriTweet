@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_location_text_view"
         android:layout_marginTop="5dp"
-        android:text="following"
+        android:text="@string/following_hint"
         android:textSize="16sp"/>
 
     <TextView
@@ -65,6 +65,6 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/user_following_text_view"
         android:layout_toRightOf="@+id/user_following_text_view"
-        android:text="follower"
+        android:text="@string/followers_hint"
         android:textSize="16sp"/>
 </RelativeLayout>

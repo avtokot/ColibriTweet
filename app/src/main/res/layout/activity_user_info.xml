@@ -1,19 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.avtokot.colibritweet.UserInfoActivity">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <TextView
+    <ImageView
+        android:id="@+id/user_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:src="@mipmap/ic_launcher"/>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/user_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="name"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/user_nick_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="nick"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/user_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="description"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/user_location_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="location"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/user_following_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="following"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/user_followers_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="follower"
+            android:textSize="16sp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -13,58 +13,40 @@
 
     <TextView
         android:id="@+id/user_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewPrimary"
         android:layout_below="@+id/user_image_view"
-        android:layout_marginTop="5dp"
-        android:text="name"
-        android:textSize="16sp"/>
+        android:text="name"/>
 
     <TextView
         android:id="@+id/user_nick_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewPrimary"
         android:layout_below="@+id/user_name_text_view"
-        android:layout_marginTop="5dp"
-        android:text="nick"
-        android:textSize="16sp"/>
+        android:text="nick"/>
 
     <TextView
         android:id="@+id/user_description_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewPrimary"
         android:layout_below="@+id/user_nick_text_view"
-        android:layout_marginTop="5dp"
-        android:text="description"
-        android:textSize="16sp"/>
+        android:text="description"/>
 
     <TextView
         android:id="@+id/user_location_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewPrimary"
         android:layout_below="@+id/user_description_text_view"
-        android:layout_marginTop="5dp"
-        android:text="location"
-        android:textSize="16sp"/>
+        android:text="location"/>
 
     <TextView
         android:id="@+id/user_following_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewPrimary"
         android:layout_below="@+id/user_location_text_view"
-        android:layout_marginTop="5dp"
-        android:text="@string/following_hint"
-        android:textSize="16sp"/>
+        android:text="@string/following_hint"/>
 
     <TextView
         android:id="@+id/user_followers_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewPrimary"
         android:layout_below="@+id/user_location_text_view"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/user_following_text_view"
         android:layout_toRightOf="@+id/user_following_text_view"
-        android:text="@string/followers_hint"
-        android:textSize="16sp"/>
+        android:text="@string/followers_hint"/>
 </RelativeLayout>

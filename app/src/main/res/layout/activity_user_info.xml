@@ -13,7 +13,7 @@
 
     <TextView
         android:id="@+id/user_name_text_view"
-        style="@style/TextView.Primary"
+        style="@style/TextView.Primary.Header"
         android:layout_below="@+id/user_image_view"
         android:layout_marginTop="@dimen/text_small_margin_5dp"
         android:text="name"/>
@@ -32,27 +32,64 @@
         android:layout_marginTop="@dimen/text_small_margin_5dp"
         android:text="description"/>
 
+    <ImageView
+        android:id="@+id/user_location_icon_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/user_location_text_view"
+        android:layout_below="@+id/user_description_text_view"
+        android:layout_alignBottom="@+id/user_location_text_view"
+        android:src="@drawable/ic_location_on_gray_24dp"/>
+
     <TextView
         android:id="@+id/user_location_text_view"
         style="@style/TextView.Secondary"
         android:layout_below="@+id/user_description_text_view"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="@dimen/text_small_margin_5dp"
-        android:text="location"/>
+        android:layout_toEndOf="@+id/user_location_icon_image_view"
+        android:layout_toRightOf="@+id/user_location_icon_image_view"
+        android:text="Location"/>
 
     <TextView
-        android:id="@+id/user_following_text_view"
-        style="@style/TextView.Secondary"
+        android:id="@+id/following_count_text_view"
+        style="@style/TextView.Primary.Bold"
         android:layout_below="@+id/user_location_text_view"
         android:layout_marginTop="@dimen/text_small_margin_5dp"
-        android:text="@string/following_hint"/>
+        android:text="4"/>
 
     <TextView
-        android:id="@+id/user_followers_text_view"
+        android:id="@+id/following_text_view"
+        style="@style/TextView.Secondary"
+        android:layout_below="@+id/user_location_text_view"
+        android:layout_marginStart="@dimen/text_small_margin_5dp"
+        android:layout_marginTop="@dimen/text_small_margin_5dp"
+        android:layout_toEndOf="@+id/following_count_text_view"
+        android:layout_toRightOf="@+id/following_count_text_view"
+        android:text="@string/following_hint"
+        android:layout_marginLeft="@dimen/text_small_margin_5dp"/>
+
+    <TextView
+        android:id="@+id/followers_count_text_view"
+        style="@style/TextView.Primary.Bold"
+        android:layout_below="@+id/user_location_text_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="@dimen/text_small_margin_5dp"
+        android:layout_toEndOf="@+id/following_text_view"
+        android:layout_toRightOf="@+id/following_text_view"
+        android:text="4"/>
+
+
+    <TextView
+        android:id="@+id/followers_text_view"
         style="@style/TextView.Secondary"
         android:layout_below="@+id/user_location_text_view"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="@dimen/text_small_margin_5dp"
-        android:layout_toEndOf="@+id/user_following_text_view"
-        android:layout_toRightOf="@+id/user_following_text_view"
+        android:layout_toEndOf="@+id/followers_count_text_view"
+        android:layout_toRightOf="@+id/followers_count_text_view"
         android:text="@string/followers_hint"/>
 </RelativeLayout>

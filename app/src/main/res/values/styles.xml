@@ -23,6 +23,10 @@
         <item name="android:textAppearance">@style/Text.Primary</item>
     </style>
 
+    <style name="TextView.Primary.Header">
+        <item name="android:textAppearance">@style/Text.Primary.Header</item>
+    </style>
+
     <style name="TextView.Secondary">
         <item name="android:textAppearance">@style/Text.Secondary</item>
     </style>
@@ -36,7 +40,20 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="Text.Primary.Header">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Text.Secondary">
         <item name="android:textColor">@color/gray_dove_light</item>
+    </style>
+
+    <style name="Text.Primary.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView.Primary.Bold">
+        <item name="android:textAppearance">@style/Text.Primary.Bold</item>
     </style>
 </resources>

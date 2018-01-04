@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/user_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo_user_profile"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/do_it"/>
 
     <TextView
         android:id="@+id/user_name_text_view"
         style="@style/TextView.Primary.Header"
-        android:layout_below="@+id/user_image_view"
+        android:layout_below="@+id/photo_user_profile"
         android:layout_marginTop="@dimen/text_small_margin_5dp"
         android:text="name"/>
 
@@ -36,9 +36,9 @@
         android:id="@+id/user_location_icon_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/user_location_text_view"
         android:layout_alignTop="@+id/user_location_text_view"
         android:layout_below="@+id/user_description_text_view"
-        android:layout_alignBottom="@+id/user_location_text_view"
         android:src="@drawable/ic_location_on_gray_24dp"/>
 
     <TextView
@@ -63,12 +63,12 @@
         android:id="@+id/following_text_view"
         style="@style/TextView.Secondary"
         android:layout_below="@+id/user_location_text_view"
+        android:layout_marginLeft="@dimen/text_small_margin_5dp"
         android:layout_marginStart="@dimen/text_small_margin_5dp"
         android:layout_marginTop="@dimen/text_small_margin_5dp"
         android:layout_toEndOf="@+id/following_count_text_view"
         android:layout_toRightOf="@+id/following_count_text_view"
-        android:text="@string/following_hint"
-        android:layout_marginLeft="@dimen/text_small_margin_5dp"/>
+        android:text="@string/following_hint"/>
 
     <TextView
         android:id="@+id/followers_count_text_view"

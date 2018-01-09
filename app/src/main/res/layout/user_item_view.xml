@@ -7,8 +7,8 @@
               android:padding="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="48dp"
         android:id="@+id/profile_image_view"
+        android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/do_it"/>
 
@@ -19,12 +19,14 @@
         android:padding="8dp">
 
         <TextView
+            android:id="@+id/user_name_text_view"
             style="@style/TextView.Primary.Bold"
             android:layout_marginLeft="@dimen/text_small_margin_5dp"
             android:layout_marginStart="@dimen/text_small_margin_5dp"
             android:text="Devcolibri"/>
 
         <TextView
+            android:id="@+id/user_nick_text_view"
             style="@style/TextView.Secondary"
             android:layout_marginLeft="@dimen/text_small_margin_5dp"
             android:layout_marginStart="@dimen/text_small_margin_5dp"

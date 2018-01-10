@@ -37,7 +37,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
         loadUserInfo();
 
-
     }
 
     private void displayUserInfo(User user) {
@@ -52,9 +51,10 @@ public class UserInfoActivity extends AppCompatActivity {
 
                     @Override
                     public void onError() {
-
+                        Toast.makeText(UserInfoActivity.this, "Соединение нет", Toast.LENGTH_SHORT).show();
                     }
                 }); // куда выгружать
+
         nameTextView.setText(user.getName());
         nickTextView.setText(user.getNick());
         descriptionTextView.setText(user.getDescription());

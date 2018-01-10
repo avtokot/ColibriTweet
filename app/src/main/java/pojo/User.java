@@ -19,8 +19,8 @@ public class User {
         this.imageUrl = imageUrl;
         this.name = name;
         this.nick = nick;
-        this.location = location;
         this.description = description;
+        this.location = location;
         this.followingCount = followingCount;
         this.followersCount = followersCount;
     }

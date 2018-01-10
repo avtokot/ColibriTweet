@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import pojo.User;
@@ -35,10 +37,14 @@ public class UserInfoActivity extends AppCompatActivity {
 
         loadUserInfo();
 
-       /* Picasso.with(this)
-                .load("http://i.imgur.com/DvpvklR.png") // откуда загружать
-                .placeholder(R.drawable.do_it) // заглушка при отсутствии интернета
-                .into(photoUserProfile, new Callback() {
+
+    }
+
+    private void displayUserInfo(User user) {
+        Picasso.with(this)
+                .load(user.getImageUrl()) // откуда загружать
+                .placeholder(R.drawable.do_it) // заглушка
+                .into(photoUserImageView, new Callback() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(UserInfoActivity.this, "Фото профиля загружено", Toast.LENGTH_SHORT).show();
@@ -48,14 +54,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     public void onError() {
 
                     }
-                }); // место загрузки*/
-    }
-
-    private void displayUserInfo(User user) {
-        Picasso.with(this)
-                .load(user.getImageUrl())
-                .placeholder(R.drawable.do_it)
-                .into(photoUserImageView);
+                }); // куда выгружать
         nameTextView.setText(user.getName());
         nickTextView.setText(user.getNick());
         descriptionTextView.setText(user.getDescription());

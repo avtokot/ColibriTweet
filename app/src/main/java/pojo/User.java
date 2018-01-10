@@ -14,7 +14,7 @@ public class User {
     private String followingCount;
     private String followersCount;
 
-    public User(long id, String imageUrl, String name, String nick, String location, String description, String followingCount, String followersCount) {
+    public User(long id, String imageUrl, String name, String nick, String description, String location, String followingCount, String followersCount) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
@@ -57,20 +57,20 @@ public class User {
         this.nick = nick;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getFollowingCount() {

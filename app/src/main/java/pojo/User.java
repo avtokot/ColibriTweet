@@ -29,64 +29,32 @@ public class User {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getNick() {
         return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getDescription() {
+        return description;
     }
 
     public String getFollowingCount() {
         return followingCount;
     }
 
-    public void setFollowingCount(String followingCount) {
-        this.followingCount = followingCount;
-    }
-
     public String getFollowersCount() {
         return followersCount;
-    }
-
-    public void setFollowersCount(String followersCount) {
-        this.followersCount = followersCount;
     }
 
     @Override

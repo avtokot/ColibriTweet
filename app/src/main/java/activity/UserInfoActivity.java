@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,8 @@ public class UserInfoActivity extends AppCompatActivity {
     private TweetAdapter tweetAdapter;
 
     private Toolbar toolbar;
+    private EditText searchEditText;
+    private ImageButton searchImageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,8 @@ public class UserInfoActivity extends AppCompatActivity {
         loadTweets();
         initToolbar();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

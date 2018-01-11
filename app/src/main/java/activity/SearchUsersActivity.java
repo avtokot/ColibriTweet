@@ -6,6 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.avtokot.colibritweet.R;
 
@@ -20,6 +28,10 @@ public class SearchUsersActivity extends AppCompatActivity {
     private RecyclerView usersRecyclerView;
     private UsersAdapter usersAdapter;
 
+    private Toolbar toolbar;
+    private EditText searchEditText;
+    private ImageButton searchImageBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +39,44 @@ public class SearchUsersActivity extends AppCompatActivity {
 
         initRecyclerView();
         searchUsers();
+        searchToolbarEditUsers(); // поиск users
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Слушатель для поиска users
+        searchEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchUsers();
+            }
+        });
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchUsers();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void searchToolbarEditUsers() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        searchEditText = toolbar.findViewById(R.id.search_edit);
+        searchImageBtn = toolbar.findViewById(R.id.search_button);
     }
 
     private void initRecyclerView() {
@@ -49,6 +99,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
     private void searchUsers() {
         Collection<User> users = getUsers();
+        usersAdapter.clearItems(); // удаляет старые элементы из адаптера
         usersAdapter.setItems(users);
     }
 

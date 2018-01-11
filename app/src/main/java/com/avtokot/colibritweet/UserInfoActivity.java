@@ -2,6 +2,8 @@ package com.avtokot.colibritweet;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,6 +11,11 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import adapter.TweetAdapter;
+import pojo.Tweet;
 import pojo.User;
 
 public class UserInfoActivity extends AppCompatActivity {
@@ -20,6 +27,10 @@ public class UserInfoActivity extends AppCompatActivity {
     private TextView locationTextView;
     private TextView followingCountTextView;
     private TextView followersCountTextView;
+
+    private RecyclerView tweetsRecyclerView;
+
+    private TweetAdapter tweetAdapter;
 
 
     @Override
@@ -36,8 +47,39 @@ public class UserInfoActivity extends AppCompatActivity {
         followingCountTextView = (TextView) findViewById(R.id.following_count_text_view);
 
         loadUserInfo();
-
+        initRecyclerView();
+        loadTweets();
     }
+
+    private void loadTweets() {
+        Collection<Tweet> tweets = getTweets();
+        tweetAdapter.setItems(tweets);
+    }
+
+    private Collection<Tweet> getTweets() {
+        return Arrays.asList(
+                new Tweet(getUser(), 1L, "Thu Dec 10 07:31:08 +0000 2017", "Использование RecyclerView говорит сам за себя 1",
+                        23L, 39L, "https://www.w3schools.com/w3css/img_fjords.jpg"),
+                new Tweet(getUser(), 2L, "Thu Dec 12 07:31:08 +0000 2017", "Использование RecyclerView дает больше возможностей нежели вы ожидали",
+                        8L, 21L, "https://www.w3schools.com/w3images/lights.jpg"),
+                new Tweet(getUser(), 3L, "Thu Dec 11 07:31:08 +0000 2017", "Картинки картинки и еще раз красивые картинки",
+                        3L, 78L, "https://www.w3schools.com/css/img_mountains.jpg")
+        );
+    }
+
+    private void initRecyclerView() {
+        tweetsRecyclerView = (RecyclerView) findViewById(R.id.tweets_recycler_view);
+        tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // отображение списка в виде линейного списка
+
+        tweetAdapter = new TweetAdapter();
+        tweetsRecyclerView.setAdapter(tweetAdapter);
+    }
+
+    private void loadUserInfo() {
+        User user = getUser();
+        displayUserInfo(user);
+    }
+
 
     private void displayUserInfo(User user) {
         Picasso.with(this)
@@ -51,7 +93,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
                     @Override
                     public void onError() {
-                        Toast.makeText(UserInfoActivity.this, "Соединение нет", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserInfoActivity.this, "Соединения нет", Toast.LENGTH_SHORT).show();
                     }
                 }); // куда выгружать
 
@@ -67,10 +109,6 @@ public class UserInfoActivity extends AppCompatActivity {
         followersCountTextView.setText(followersCount);
     }
 
-    private void loadUserInfo() {
-        User user = getUser();
-        displayUserInfo(user);
-    }
 
     private User getUser() {
         return new User(

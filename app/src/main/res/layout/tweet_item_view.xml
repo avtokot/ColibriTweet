@@ -107,7 +107,7 @@
                 style="@style/TextView.Secondary"
                 android:layout_marginLeft="@dimen/text_small_margin_5dp"
                 android:layout_marginStart="@dimen/text_small_margin_5dp"
-                android:text="16"/>
+                android:text="27"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

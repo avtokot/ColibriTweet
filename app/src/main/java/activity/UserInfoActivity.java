@@ -1,4 +1,4 @@
-package com.avtokot.colibritweet;
+package activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avtokot.colibritweet.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +33,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private TweetAdapter tweetAdapter;
 
+    public static final String USER_ID = "user_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,13 @@
 package activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +25,8 @@ import pojo.User;
 
 public class UserInfoActivity extends AppCompatActivity {
 
+    public static final String USER_ID = "user_id";
+
     private ImageView photoUserImageView;
     private TextView nameTextView;
     private TextView nickTextView;
@@ -33,7 +39,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private TweetAdapter tweetAdapter;
 
-    public static final String USER_ID = "user_id";
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,28 @@ public class UserInfoActivity extends AppCompatActivity {
         loadUserInfo();
         initRecyclerView();
         loadTweets();
+        initToolbar();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_info_menu, menu);
+        return true;
+    } // создание меню
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search_action:
+                Intent intent = new Intent(this, SearchUsersActivity.class);
+                startActivity(intent);
+        }
+        return true;
+    } // выбор элементов меню
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void loadTweets() {
@@ -109,6 +137,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
         String followersCount = String.valueOf(user.getFollowersCount());
         followersCountTextView.setText(followersCount);
+
+        //getSupportActionBar().setTitle(user.getName());
     }
 
 

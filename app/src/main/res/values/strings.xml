@@ -5,4 +5,6 @@
     <string name="search_hint">поиск</string>
     <string name="followers_hint">Followers</string>
     <string name="content_recycler_text">Тут мы будем использовать RecyclerView - без вариков, даже пытаться объяснять не буду</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">oGbXWre1uqxrnNMSbf70AJRk4</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">cvm9yVMbXMUVvbTf0LbSeTixSUngWp24TxHSyH5Rc4OvaSqMoR</string>
 </resources>

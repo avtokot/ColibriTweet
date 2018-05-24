@@ -32,4 +32,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:recyclerview-v7:27.1.1'
     compile 'com.android.support:appcompat-v7:27.1.1'
+    // Библиотека twitter
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
 }

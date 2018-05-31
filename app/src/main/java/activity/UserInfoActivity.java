@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -18,10 +19,12 @@ import com.avtokot.colibritweet.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
 import adapter.TweetAdapter;
+import network.HttpClient;
 import pojo.Tweet;
 import pojo.User;
 
@@ -45,10 +48,14 @@ public class UserInfoActivity extends AppCompatActivity {
     private EditText searchEditText;
     private ImageButton searchImageBtn;
 
+    private HttpClient httpClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
+
+        long user_id = getIntent().getLongExtra(USER_ID, -1);
 
         photoUserImageView = (ImageView) findViewById(R.id.photo_user_profile);
         nameTextView = (TextView) findViewById(R.id.user_name_text_view);
@@ -58,12 +65,13 @@ public class UserInfoActivity extends AppCompatActivity {
         followersCountTextView = (TextView) findViewById(R.id.followers_count_text_view);
         followingCountTextView = (TextView) findViewById(R.id.following_count_text_view);
 
-        loadUserInfo();
+        httpClient = new HttpClient();
+
+        loadUserInfo(user_id);
         initRecyclerView();
         loadTweets();
         initToolbar();
     }
-
 
 
     @Override
@@ -111,9 +119,20 @@ public class UserInfoActivity extends AppCompatActivity {
         tweetsRecyclerView.setAdapter(tweetAdapter);
     }
 
-    private void loadUserInfo() {
-        User user = getUser();
-        displayUserInfo(user);
+    private void loadUserInfo(final long user_id) {
+        Runnable readUserRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String userInfo = httpClient.readerUserInfo(user_id);
+                    Log.d("HttpTest", userInfo);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(readUserRunnable).start();
+
     }
 
 

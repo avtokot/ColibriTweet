@@ -86,7 +86,7 @@ public class SearchUsersActivity extends AppCompatActivity {
         UsersAdapter.OnUserClickListener onUserClickListener = new UsersAdapter.OnUserClickListener() {
             @Override
             public void onUserClick(User user) {
-                //Toast.makeText(SearchUsersActivity.this, "user " + user.getName(), Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(SearchUsersActivity.this, UserInfoActivity.class);
                 intent.putExtra(UserInfoActivity.USER_ID, user.getId());
                 startActivity(intent);
@@ -112,8 +112,8 @@ public class SearchUsersActivity extends AppCompatActivity {
                         "@devcolibri",
                         "Sample description",
                         "USA",
-                        "23",
-                        "12"
+                        23,
+                        12
                 ),
                 new User(
                         676875443L,
@@ -122,8 +122,8 @@ public class SearchUsersActivity extends AppCompatActivity {
                         "@elonmusk",
                         "Hat Salesman",
                         "Borning",
-                        "14",
-                        "10"
+                        14,
+                        10
                 )
         );
     }

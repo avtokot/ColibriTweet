@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -20,6 +19,8 @@ import android.widget.Toast;
 import com.avtokot.colibritweet.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -122,38 +123,26 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     private void loadUserInfo(final long user_id) {
-        Runnable readUserRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final String userInfo = httpClient.readUserInfo(user_id);
-                    Log.d("HttpTest", userInfo);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        new Thread(readUserRunnable).start();
         new UserInfoAsyncTask().execute(user_id); // передаем user_id в метод execute
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class UserInfoAsyncTask extends AsyncTask<Long, Integer, String> {
+    private class UserInfoAsyncTask extends AsyncTask<Long, Integer, User> {
 
         @Override
-        protected String doInBackground(Long... id) {
-            Long user_id = id[0];
+        protected User doInBackground(Long... id) {
+
             try {
+                Long user_id = id[0];
                 return httpClient.readUserInfo(user_id);
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
+                return null;
             }
-            return null;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d("HttpTest", result);
+        protected void onPostExecute(User user) {
+            displayUserInfo(user);
         }
     }
 
@@ -196,8 +185,8 @@ public class UserInfoActivity extends AppCompatActivity {
                 "@devcolibri",
                 "Sample description",
                 "Usa",
-                "23",
-                "45"
+                23,
+                45
         );
     }
 }

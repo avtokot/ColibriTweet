@@ -11,10 +11,10 @@ public class User {
     private String nick;
     private String location;
     private String description;
-    private String followingCount;
-    private String followersCount;
+    private int followingCount;
+    private int followersCount;
 
-    public User(long id, String imageUrl, String name, String nick, String description, String location, String followingCount, String followersCount) {
+    public User(long id, String imageUrl, String name, String nick, String description, String location, int followingCount, int followersCount) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
@@ -38,7 +38,7 @@ public class User {
     }
 
     public String getNick() {
-        return nick;
+        return "@" + nick;
     }
 
     public String getLocation() {
@@ -49,11 +49,11 @@ public class User {
         return description;
     }
 
-    public String getFollowingCount() {
+    public int getFollowingCount() {
         return followingCount;
     }
 
-    public String getFollowersCount() {
+    public int getFollowersCount() {
         return followersCount;
     }
 
@@ -65,17 +65,16 @@ public class User {
         User user = (User) o;
 
         if (id != user.id) return false;
+        if (followingCount != user.followingCount) return false;
+        if (followersCount != user.followersCount) return false;
         if (imageUrl != null ? !imageUrl.equals(user.imageUrl) : user.imageUrl != null)
             return false;
         if (!name.equals(user.name)) return false;
         if (!nick.equals(user.nick)) return false;
-        if (location != null ? !location.equals(user.location) : user.location != null)
+        if (description != null ? !description.equals(user.description) : user.description != null) {
             return false;
-        if (description != null ? !description.equals(user.description) : user.description != null)
-            return false;
-        if (followingCount != null ? !followingCount.equals(user.followingCount) : user.followingCount != null)
-            return false;
-        return followersCount != null ? followersCount.equals(user.followersCount) : user.followersCount == null;
+        }
+        return location != null ? location.equals(user.location) : user.location == null;
 
     }
 
@@ -87,8 +86,9 @@ public class User {
         result = 31 * result + nick.hashCode();
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (followingCount != null ? followingCount.hashCode() : 0);
-        result = 31 * result + (followersCount != null ? followersCount.hashCode() : 0);
+        result = 31 * result + followingCount;
+        result = 31 * result + followersCount;
         return result;
     }
+
 }

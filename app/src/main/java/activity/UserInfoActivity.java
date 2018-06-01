@@ -1,6 +1,8 @@
 package activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,7 +126,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    String userInfo = httpClient.readerUserInfo(user_id);
+                    final String userInfo = httpClient.readUserInfo(user_id);
                     Log.d("HttpTest", userInfo);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -132,9 +134,28 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         };
         new Thread(readUserRunnable).start();
-
+        new UserInfoAsyncTask().execute(user_id); // передаем user_id в метод execute
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private class UserInfoAsyncTask extends AsyncTask<Long, Integer, String> {
+
+        @Override
+        protected String doInBackground(Long... id) {
+            Long user_id = id[0];
+            try {
+                return httpClient.readUserInfo(user_id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("HttpTest", result);
+        }
+    }
 
     private void displayUserInfo(User user) {
         Picasso.with(this)

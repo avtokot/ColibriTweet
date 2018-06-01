@@ -17,7 +17,8 @@ public class HttpClient {
     private static final String HEADER_AUTHORIZATION = "Authorization";
     private static final String GET = "GET";
 
-    public String readerUserInfo(long user_id) throws IOException {
+    public String readUserInfo(long user_id) throws IOException {
+
         String requestUrl = "https://api.twitter.com/1.1/users/show.json?user_id=" + user_id;
 
         // Подключаемся к серверу

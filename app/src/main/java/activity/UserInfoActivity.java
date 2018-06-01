@@ -60,13 +60,13 @@ public class UserInfoActivity extends AppCompatActivity {
 
         long user_id = getIntent().getLongExtra(USER_ID, -1);
 
-        photoUserImageView = (ImageView) findViewById(R.id.photo_user_profile);
-        nameTextView = (TextView) findViewById(R.id.user_name_text_view);
-        nickTextView = (TextView) findViewById(R.id.user_nick_text_view);
-        descriptionTextView = (TextView) findViewById(R.id.user_description_text_view);
-        locationTextView = (TextView) findViewById(R.id.user_location_text_view);
-        followersCountTextView = (TextView) findViewById(R.id.followers_count_text_view);
-        followingCountTextView = (TextView) findViewById(R.id.following_count_text_view);
+        photoUserImageView = findViewById(R.id.photo_user_profile);
+        nameTextView = findViewById(R.id.user_name_text_view);
+        nickTextView = findViewById(R.id.user_nick_text_view);
+        descriptionTextView = findViewById(R.id.user_description_text_view);
+        locationTextView = findViewById(R.id.user_location_text_view);
+        followersCountTextView = findViewById(R.id.followers_count_text_view);
+        followingCountTextView = findViewById(R.id.following_count_text_view);
 
         httpClient = new HttpClient();
 
@@ -94,7 +94,7 @@ public class UserInfoActivity extends AppCompatActivity {
     } // выбор элементов меню
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -115,7 +115,7 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        tweetsRecyclerView = (RecyclerView) findViewById(R.id.tweets_recycler_view);
+        tweetsRecyclerView = findViewById(R.id.tweets_recycler_view);
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // отображение списка в виде линейного списка
 
         tweetAdapter = new TweetAdapter();

@@ -24,7 +24,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
     public UsersAdapter(OnUserClickListener onUserClickListener) {
         this.onUserClickListener = onUserClickListener;
-    } // Конструктор
+    }
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

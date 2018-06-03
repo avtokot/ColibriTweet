@@ -23,7 +23,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 
 import adapter.TweetAdapter;
@@ -58,7 +57,7 @@ public class UserInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        long user_id = getIntent().getLongExtra(USER_ID, -1);
+        long userId = getIntent().getLongExtra(USER_ID, -1);
 
         photoUserImageView = findViewById(R.id.photo_user_profile);
         nameTextView = findViewById(R.id.user_name_text_view);
@@ -70,9 +69,9 @@ public class UserInfoActivity extends AppCompatActivity {
 
         httpClient = new HttpClient();
 
-        loadUserInfo(user_id);
+        loadUserInfo(userId);
         initRecyclerView();
-        loadTweets();
+        loadTweets(userId);
         initToolbar();
     }
 
@@ -98,21 +97,33 @@ public class UserInfoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    private void loadTweets() {
-        Collection<Tweet> tweets = getTweets();
-        tweetAdapter.setItems(tweets);
+
+    private void loadTweets(long userId) {
+        new TweetsAsyncTask().execute(userId);
     }
 
-    private Collection<Tweet> getTweets() {
-        return Arrays.asList(
-                new Tweet(getUser(), 1L, "Thu Dec 10 07:31:08 +0000 2017", "Использование RecyclerView говорит сам за себя 1",
-                        23L, 39L, "https://www.w3schools.com/w3css/img_fjords.jpg"),
-                new Tweet(getUser(), 2L, "Thu Dec 12 07:31:08 +0000 2017", "Использование RecyclerView дает больше возможностей нежели вы ожидали",
-                        8L, 21L, "https://www.w3schools.com/w3images/lights.jpg"),
-                new Tweet(getUser(), 3L, "Thu Dec 11 07:31:08 +0000 2017", "Картинки картинки и еще раз красивые картинки",
-                        3L, 78L, "https://www.w3schools.com/css/img_mountains.jpg")
-        );
+    @SuppressLint("StaticFieldLeak")
+    private class TweetsAsyncTask extends AsyncTask<Long, Integer, Collection<Tweet>> {
+
+        @Override
+        protected Collection<Tweet> doInBackground(Long... longs) {
+
+            try {
+                long userId = longs[0];
+                return httpClient.readTweets(userId);
+
+            } catch (JSONException | IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Collection<Tweet> tweets) {
+            tweetAdapter.setItems(tweets);
+        }
     }
+
 
     private void initRecyclerView() {
         tweetsRecyclerView = findViewById(R.id.tweets_recycler_view);
@@ -174,19 +185,5 @@ public class UserInfoActivity extends AppCompatActivity {
         followersCountTextView.setText(followersCount);
 
         //getSupportActionBar().setTitle(user.getName());
-    }
-
-
-    private User getUser() {
-        return new User(
-                1L,
-                "http://i.imgur.com/DvpvklR.png",
-                "Devcolibri",
-                "@devcolibri",
-                "Sample description",
-                "Usa",
-                23,
-                45
-        );
     }
 }

@@ -13,25 +13,38 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
 
+import pojo.Tweet;
 import pojo.User;
 
 public class HttpClient {
 
     private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String EXTENDED_MODE = "&tweet_mode=extended";
     private static final String GET = "GET";
-
     private final JsonParser jsonParser;
 
     public HttpClient() {
         jsonParser = new JsonParser();
     }
 
-    public User readUserInfo(long user_id) throws IOException, JSONException {
+    public User readUserInfo(long userId) throws IOException, JSONException {
 
-        String requestUrl = "https://api.twitter.com/1.1/users/show.json?user_id=" + user_id;
+        String requestUrl = "https://api.twitter.com/1.1/users/show.json?user_id=" + userId;
+        String response = getResponse(requestUrl);
+        User user = jsonParser.getUser(response);
+        return user;
+    }
 
-        // Подключаемся к серверу
+    public Collection<Tweet> readTweets(long userId) throws IOException, JSONException {
+        String requestUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=" + userId + EXTENDED_MODE;
+        String response = getResponse(requestUrl);
+        Collection<Tweet> tweets = jsonParser.getTweets(response);
+        return tweets;
+    }
+
+    private String getResponse(String requestUrl) throws IOException {
         URL url = new URL(requestUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -49,9 +62,7 @@ public class HttpClient {
             in = connection.getInputStream();
         }
 
-        String response = convertStreamToString(in);
-        User user = jsonParser.getUser(response);
-        return user;
+        return convertStreamToString(in);
     }
 
     private static String convertStreamToString(InputStream stream) throws IOException {

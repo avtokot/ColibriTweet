@@ -120,7 +120,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Collection<Tweet> tweets) {
-            tweetAdapter.setItems(tweets);
+            if (tweets != null) {
+                tweetAdapter.setItems(tweets);
+            } else {
+                Toast.makeText(UserInfoActivity.this, R.string.str_loading_error_msg, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -153,7 +157,11 @@ public class UserInfoActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(User user) {
-            displayUserInfo(user);
+            if (user != null) {
+                displayUserInfo(user);
+            } else {
+                Toast.makeText(UserInfoActivity.this, R.string.str_loading_error_msg, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

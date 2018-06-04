@@ -7,4 +7,6 @@
     <string name="content_recycler_text">Тут мы будем использовать RecyclerView - без вариков, даже пытаться объяснять не буду</string>
     <string name="com.twitter.sdk.android.CONSUMER_KEY">oGbXWre1uqxrnNMSbf70AJRk4</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">cvm9yVMbXMUVvbTf0LbSeTixSUngWp24TxHSyH5Rc4OvaSqMoR</string>
+    <string name="not_symbols_msg">Введите имя</string>
+    <string name="str_loading_error_msg">Ошибка загрузки</string>
 </resources>

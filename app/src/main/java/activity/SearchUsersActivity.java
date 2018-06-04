@@ -1,7 +1,9 @@
 package activity;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,13 +16,17 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avtokot.colibritweet.R;
 
-import java.util.Arrays;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.Collection;
 
 import adapter.UsersAdapter;
+import network.HttpClient;
 import pojo.User;
 
 public class SearchUsersActivity extends AppCompatActivity {
@@ -32,20 +38,24 @@ public class SearchUsersActivity extends AppCompatActivity {
     private EditText searchEditText;
     private ImageButton searchImageBtn;
 
+    private HttpClient httpClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_users);
 
         initRecyclerView();
-        searchUsers();
+
         searchToolbarEditUsers(); // поиск users
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        httpClient = new HttpClient();
+
         // Слушатель для поиска users
-        searchEditText.setOnClickListener(new View.OnClickListener() {
+        searchImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchUsers();
@@ -63,6 +73,40 @@ public class SearchUsersActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private void searchUsers() {
+        final String query = searchEditText.getText().toString();
+        if (query.length() == 0) {
+            Toast.makeText(SearchUsersActivity.this, R.string.not_symbols_msg, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        new UsersAsyncTask().execute(query);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class UsersAsyncTask extends AsyncTask<String, Integer, Collection<User>> {
+
+        @Override
+        protected Collection<User> doInBackground(String... strings) {
+            String query = strings[0];
+            try {
+                return httpClient.readUsers(query);
+            } catch (IOException | JSONException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Collection<User> users) {
+            if (users != null) {
+                usersAdapter.clearItems();
+                usersAdapter.setItems(users);
+            } else {
+                Toast.makeText(SearchUsersActivity.this, R.string.str_loading_error_msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -74,13 +118,13 @@ public class SearchUsersActivity extends AppCompatActivity {
     }
 
     private void searchToolbarEditUsers() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         searchEditText = toolbar.findViewById(R.id.search_edit);
         searchImageBtn = toolbar.findViewById(R.id.search_button);
     }
 
     private void initRecyclerView() {
-        usersRecyclerView = (RecyclerView) findViewById(R.id.users_recycler_view);
+        usersRecyclerView = findViewById(R.id.users_recycler_view);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         UsersAdapter.OnUserClickListener onUserClickListener = new UsersAdapter.OnUserClickListener() {
@@ -95,36 +139,5 @@ public class SearchUsersActivity extends AppCompatActivity {
 
         usersAdapter = new UsersAdapter(onUserClickListener);
         usersRecyclerView.setAdapter(usersAdapter);
-    }
-
-    private void searchUsers() {
-        Collection<User> users = getUsers();
-        usersAdapter.clearItems(); // удаляет старые элементы из адаптера
-        usersAdapter.setItems(users);
-    }
-
-    private Collection<User> getUsers() {
-        return Arrays.asList(
-                new User(
-                        34354647675443L,
-                        "http://i.imgur.com/DvpvklR.png",
-                        "Devcolibri",
-                        "@devcolibri",
-                        "Sample description",
-                        "USA",
-                        23,
-                        12
-                ),
-                new User(
-                        676875443L,
-                        "http://pbs.twimg.com/profile_images/782474226020200448/zDo-gAo0_400x400.jpg",
-                        "Elon Musk",
-                        "@elonmusk",
-                        "Hat Salesman",
-                        "Borning",
-                        14,
-                        10
-                )
-        );
     }
 }

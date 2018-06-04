@@ -28,6 +28,19 @@ public class JsonParser {
         return new User(id, imageUrl, name, nick, description, location, followingCount, followersCount);
     }
 
+    public Collection<User> getUsers(String response) throws JSONException {
+        JSONArray jsonArray = new JSONArray(response);
+        Collection<User> usersResult = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject usersJson = jsonArray.getJSONObject(i);
+            User user = getUser(usersJson);
+            usersResult.add(user);
+        }
+
+        return usersResult;
+    }
+
     public Collection<Tweet> getTweets(String response) throws JSONException {
         JSONArray jsonArray = new JSONArray(response);
         Collection<Tweet> tweetsResult = new ArrayList<>();

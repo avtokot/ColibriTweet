@@ -44,6 +44,14 @@ public class HttpClient {
         return tweets;
     }
 
+    public Collection<User> readUsers(String query) throws IOException, JSONException {
+        String requestUrl = "https://api.twitter.com/1.1/users/search.json?q=" + query;
+        String encodedUrl = requestUrl.replaceAll(" ", "%20");
+        String response = getResponse(encodedUrl);
+        Collection<User> users = jsonParser.getUsers(response);
+        return users;
+    }
+
     private String getResponse(String requestUrl) throws IOException {
         URL url = new URL(requestUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

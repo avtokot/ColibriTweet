@@ -1,9 +1,5 @@
 package pojo;
 
-/**
- * Created by go on 10.01.2018.
- */
-
 public class User {
     private long id;
     private String imageUrl;

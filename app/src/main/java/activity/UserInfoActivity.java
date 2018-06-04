@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avtokot.colibritweet.R;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -51,13 +53,16 @@ public class UserInfoActivity extends AppCompatActivity {
     private ImageButton searchImageBtn;
 
     private HttpClient httpClient;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private int taskInProgressCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        long userId = getIntent().getLongExtra(USER_ID, -1);
+        final long userId = getIntent().getLongExtra(USER_ID, -1);
 
         photoUserImageView = findViewById(R.id.photo_user_profile);
         nameTextView = findViewById(R.id.user_name_text_view);
@@ -68,6 +73,16 @@ public class UserInfoActivity extends AppCompatActivity {
         followingCountTextView = findViewById(R.id.following_count_text_view);
 
         httpClient = new HttpClient();
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                tweetAdapter.clearItems();
+                loadTweets(userId);
+                loadUserInfo(userId);
+            }
+        });
 
         loadUserInfo(userId);
         initRecyclerView();
@@ -106,13 +121,19 @@ public class UserInfoActivity extends AppCompatActivity {
     private class TweetsAsyncTask extends AsyncTask<Long, Integer, Collection<Tweet>> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            setRefreshLayoutVisible(true);
+        }
+
+        @Override
         protected Collection<Tweet> doInBackground(Long... longs) {
 
             try {
                 long userId = longs[0];
                 return httpClient.readTweets(userId);
 
-            } catch (JSONException | IOException e){
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -120,6 +141,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Collection<Tweet> tweets) {
+            setRefreshLayoutVisible(false);
+
             if (tweets != null) {
                 tweetAdapter.setItems(tweets);
             } else {
@@ -128,9 +151,24 @@ public class UserInfoActivity extends AppCompatActivity {
         }
     }
 
+    private void setRefreshLayoutVisible(boolean visible) {
+        if (visible) {
+            taskInProgressCount++;
+            if (taskInProgressCount == 1) swipeRefreshLayout.setRefreshing(true);
+        } else {
+            taskInProgressCount--;
+            if (taskInProgressCount == 0) swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
 
     private void initRecyclerView() {
         tweetsRecyclerView = findViewById(R.id.tweets_recycler_view);
+
+        ViewCompat.setNestedScrollingEnabled(tweetsRecyclerView, false);
+        // added dividing line
+        tweetsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // отображение списка в виде линейного списка
 
         tweetAdapter = new TweetAdapter();
@@ -143,6 +181,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private class UserInfoAsyncTask extends AsyncTask<Long, Integer, User> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            setRefreshLayoutVisible(true);
+        }
 
         @Override
         protected User doInBackground(Long... id) {
@@ -157,6 +200,8 @@ public class UserInfoActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(User user) {
+            setRefreshLayoutVisible(false);
+
             if (user != null) {
                 displayUserInfo(user);
             } else {
@@ -169,17 +214,7 @@ public class UserInfoActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load(user.getImageUrl()) // откуда загружать
                 .placeholder(R.drawable.do_it) // заглушка
-                .into(photoUserImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(UserInfoActivity.this, "Фото профиля загружено", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError() {
-                        Toast.makeText(UserInfoActivity.this, "Соединения нет", Toast.LENGTH_SHORT).show();
-                    }
-                }); // куда выгружать
+                .into(photoUserImageView);
 
         nameTextView.setText(user.getName());
         nickTextView.setText(user.getNick());
@@ -191,7 +226,5 @@ public class UserInfoActivity extends AppCompatActivity {
 
         String followersCount = String.valueOf(user.getFollowersCount());
         followersCountTextView.setText(followersCount);
-
-        //getSupportActionBar().setTitle(user.getName());
     }
 }

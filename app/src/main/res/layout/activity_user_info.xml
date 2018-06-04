@@ -9,110 +9,126 @@
         android:id="@+id/toolbar"
         style="@style/Toolbar"/>
 
-    <RelativeLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photo_user_profile"
-            android:layout_width="96dp"
-            android:layout_height="96dp"/>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/user_name_text_view"
-            style="@style/TextView.Primary.Header"
-            android:layout_below="@+id/photo_user_profile"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:text="name"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/user_nick_text_view"
-            style="@style/TextView.Secondary"
-            android:layout_below="@+id/user_name_text_view"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:text="nick"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
 
-        <TextView
-            android:id="@+id/user_description_text_view"
-            style="@style/TextView.Primary"
-            android:layout_below="@+id/user_nick_text_view"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:text="description"/>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/photo_user_profile"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"/>
 
-        <ImageView
-            android:id="@+id/user_location_icon_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/user_location_text_view"
-            android:layout_alignTop="@+id/user_location_text_view"
-            android:layout_below="@+id/user_description_text_view"
-            android:src="@drawable/ic_location_on_gray_24dp"/>
+                    <TextView
+                        android:id="@+id/user_name_text_view"
+                        style="@style/TextView.Primary.Header"
+                        android:layout_below="@+id/photo_user_profile"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:text="name"/>
 
-        <TextView
-            android:id="@+id/user_location_text_view"
-            style="@style/TextView.Secondary"
-            android:layout_below="@+id/user_description_text_view"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:layout_toEndOf="@+id/user_location_icon_image_view"
-            android:layout_toRightOf="@+id/user_location_icon_image_view"
-            android:text="Location"/>
+                    <TextView
+                        android:id="@+id/user_nick_text_view"
+                        style="@style/TextView.Secondary"
+                        android:layout_below="@+id/user_name_text_view"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:text="nick"/>
 
-        <TextView
-            android:id="@+id/following_count_text_view"
-            style="@style/TextView.Primary.Bold"
-            android:layout_below="@+id/user_location_text_view"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:text="4"/>
+                    <TextView
+                        android:id="@+id/user_description_text_view"
+                        style="@style/TextView.Primary"
+                        android:layout_below="@+id/user_nick_text_view"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:text="description"/>
 
-        <TextView
-            android:id="@+id/following_text_view"
-            style="@style/TextView.Secondary"
-            android:layout_below="@+id/user_location_text_view"
-            android:layout_marginLeft="@dimen/text_small_margin_5dp"
-            android:layout_marginStart="@dimen/text_small_margin_5dp"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:layout_toEndOf="@+id/following_count_text_view"
-            android:layout_toRightOf="@+id/following_count_text_view"
-            android:text="@string/following_hint"/>
+                    <ImageView
+                        android:id="@+id/user_location_icon_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/user_location_text_view"
+                        android:layout_alignTop="@+id/user_location_text_view"
+                        android:layout_below="@+id/user_description_text_view"
+                        android:src="@drawable/ic_location_on_gray_24dp"/>
 
-        <TextView
-            android:id="@+id/followers_count_text_view"
-            style="@style/TextView.Primary.Bold"
-            android:layout_below="@+id/user_location_text_view"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:layout_toEndOf="@+id/following_text_view"
-            android:layout_toRightOf="@+id/following_text_view"
-            android:text="4"/>
+                    <TextView
+                        android:id="@+id/user_location_text_view"
+                        style="@style/TextView.Secondary"
+                        android:layout_below="@+id/user_description_text_view"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:layout_toEndOf="@+id/user_location_icon_image_view"
+                        android:layout_toRightOf="@+id/user_location_icon_image_view"
+                        android:text="Location"/>
+
+                    <TextView
+                        android:id="@+id/following_count_text_view"
+                        style="@style/TextView.Primary.Bold"
+                        android:layout_below="@+id/user_location_text_view"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:text="4"/>
+
+                    <TextView
+                        android:id="@+id/following_text_view"
+                        style="@style/TextView.Secondary"
+                        android:layout_below="@+id/user_location_text_view"
+                        android:layout_marginLeft="@dimen/text_small_margin_5dp"
+                        android:layout_marginStart="@dimen/text_small_margin_5dp"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:layout_toEndOf="@+id/following_count_text_view"
+                        android:layout_toRightOf="@+id/following_count_text_view"
+                        android:text="@string/following_hint"/>
+
+                    <TextView
+                        android:id="@+id/followers_count_text_view"
+                        style="@style/TextView.Primary.Bold"
+                        android:layout_below="@+id/user_location_text_view"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:layout_toEndOf="@+id/following_text_view"
+                        android:layout_toRightOf="@+id/following_text_view"
+                        android:text="4"/>
 
 
-        <TextView
-            android:id="@+id/followers_text_view"
-            style="@style/TextView.Secondary"
-            android:layout_below="@+id/user_location_text_view"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/text_small_margin_5dp"
-            android:layout_toEndOf="@+id/followers_count_text_view"
-            android:layout_toRightOf="@+id/followers_count_text_view"
-            android:text="@string/followers_hint"/>
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/followers_text_view"
+                        style="@style/TextView.Secondary"
+                        android:layout_below="@+id/user_location_text_view"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="@dimen/text_small_margin_5dp"
+                        android:layout_toEndOf="@+id/followers_count_text_view"
+                        android:layout_toRightOf="@+id/followers_count_text_view"
+                        android:text="@string/followers_hint"/>
+                </RelativeLayout>
 
-    <View
-        android:id="@+id/custom_line"
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:layout_marginTop="@dimen/text_small_margin_5dp"
-        android:background="@color/gray_mercury">
-    </View>
+                <View
+                    android:id="@+id/custom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="@dimen/text_small_margin_5dp"
+                    android:background="@color/gray_mercury">
+                </View>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tweets_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/tweets_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
